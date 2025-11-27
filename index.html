@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>College Resource Portal</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ✅ Toast Container -->
+  <div id="toastContainer"></div>
+
+  <!-- 🔐 LOGIN / REGISTER -->
+  <div id="authSection" class="auth-container">
+    <div class="flip-card" id="flipCard">
+      <div class="flip-card-inner">
+        <!-- LOGIN -->
+        <div class="flip-card-front">
+          <h2>Login</h2>
+          <input id="loginEmail" type="email" placeholder="Email (must be Gmail)" />
+          <div class="password-wrapper">
+            <input id="loginPassword" type="password" placeholder="Password" />
+            <span id="toggleLoginEye" class="toggle-eye">👁</span>
+          </div>
+          <label class="remember"><input id="rememberMe" type="checkbox" /> Remember Me</label>
+          <div class="auth-row">
+            <button id="loginBtn">Login</button>
+            <button id="forgotBtn" class="link">Forgot Password?</button>
+          </div>
+          <p>Don't have an account? <span id="showRegister" class="link">Register</span></p>
+        </div>
+
+        <!-- REGISTER -->
+        <div class="flip-card-back">
+          <h2>Register</h2>
+          <input id="regName" type="text" placeholder="Full Name" />
+          <input id="regEmail" type="email" placeholder="Email (must be Gmail)" />
+          <div class="password-wrapper">
+            <input id="regPassword" type="password" placeholder="Password" />
+            <span id="toggleRegEye" class="toggle-eye">👁</span>
+          </div>
+
+          <div class="strength-meter"><div id="strengthBar"></div></div>
+          <p id="strengthText"></p>
+
+          <button id="registerBtn">Register</button>
+          <p>Already have an account? <span id="showLogin" class="link">Login</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🧭 DASHBOARD -->
+  <div id="dashboard" class="dashboard hidden">
+    <header class="header">
+      <div class="left">
+        <h1>🎓 College Resource Portal</h1>
+        <div id="welcomeUser" class="welcome">Welcome 👋</div>
+      </div>
+      <div class="right">
+        <div id="stats" class="stats">Notes: 0 • Files: 0 • Queries: 0</div>
+        <img id="profileThumb" class="profile-thumb" src="default-avatar.png" alt="Profile" />
+        <div id="menuBtn" class="hamburger">☰</div>
+      </div>
+    </header>
+
+    <!-- Side Menu -->
+    <aside id="sideMenu" class="side-menu">
+      <button class="menu-item" data-section="homeSection">🏠 Home</button>
+      <button class="menu-item" data-section="resourceSection">📚 Resources</button>
+      <button class="menu-item" data-section="communitySection">🌐 Community</button>
+      <button class="menu-item" data-section="digilockerSection">💾 DigiLocker</button>
+      <button class="menu-item" data-section="helpdeskSection">💬 Help Desk</button>
+      <button class="menu-item" data-section="profileSection">👤 Profile</button>
+      <button id="logoutBtn" class="menu-item danger">🚪 Logout</button>
+    </aside>
+
+    <!-- Main Content -->
+    <main>
+      <!-- 🏠 HOME -->
+      <section id="homeSection" class="panel active">
+        <div class="hero">
+          <h2>Welcome to the College Resource Portal</h2>
+          <p>Your one-stop academic dashboard 🚀</p>
+        </div>
+        <div class="panel-content">
+          <div class="card">
+            <h3>💡 Daily Motivation</h3>
+            <p id="dailyQuote">Loading...</p>
+          </div>
+          <div class="card whats-new">
+            <h3>🧠 What’s New</h3>
+            <ul>
+              <li>Old + new features preserved</li>
+              <li>Remember Me (auto-login)</li>
+              <li>Password show/hide & strength meter</li>
+              <li>All data saved in LocalStorage</li>
+              <li>Profile picture upload + full profile section</li>
+              <li>Toast notifications everywhere</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>📝 Recent Notes</h3>
+            <div id="homeNotes" class="cards"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 📚 RESOURCES -->
+      <section id="resourceSection" class="panel hidden">
+        <h2>Resources</h2>
+        <div class="row">
+          <input id="resTitle" placeholder="Title" />
+          <input id="resType" placeholder="Type (Book/Notes/Video)" />
+        </div>
+        <textarea id="resDesc" placeholder="Description"></textarea>
+        <div class="row">
+          <button id="addResBtn">Add</button>
+          <button id="refreshResBtn">Refresh</button>
+        </div>
+        <ul id="allResources" class="list"></ul>
+      </section>
+
+      <!-- 🌐 COMMUNITY -->
+      <section id="communitySection" class="panel hidden">
+        <h2>Community Links</h2>
+        <div id="communityLinks" class="links"></div>
+      </section>
+
+      <!-- 💾 DIGILOCKER -->
+      <section id="digilockerSection" class="panel hidden">
+        <h2>DigiLocker</h2>
+        <input id="fileUpload" type="file" multiple />
+        <div class="row">
+          <button id="uploadBtn">Upload</button>
+          <button id="refreshFilesBtn">Refresh</button>
+        </div>
+        <ul id="fileList" class="list"></ul>
+      </section>
+
+      <!-- 💬 HELP DESK -->
+      <section id="helpdeskSection" class="panel hidden">
+        <h2>Help Desk</h2>
+        <input id="helpText" placeholder="Ask a question..." />
+        <button id="submitHelpBtn">Submit</button>
+        <ul id="helpList" class="list"></ul>
+      </section>
+
+      <!-- 👤 PROFILE SECTION -->
+      <section id="profileSection" class="panel hidden">
+        <h2>👤 My Profile</h2>
+        <div class="profile-card">
+          <img id="profilePic" class="profile-pic" src="default-avatar.png" alt="Profile Picture" />
+          <input type="file" id="profileUpload" accept="image/*" hidden />
+          <button id="uploadProfileBtn">Change Photo</button>
+          <div class="profile-info">
+            <p><b>Name:</b> <span id="profileName"></span></p>
+            <p><b>Email:</b> <span id="profileEmail"></span></p>
+            <p><b>Join Date:</b> <span id="profileDate"></span></p>
+          </div>
+          <div class="row">
+            <input id="newName" placeholder="New Name" />
+            <input id="newPassword" type="password" placeholder="New Password" />
+            <button id="saveProfileBtn">Save Changes</button>
+          </div>
+          <hr />
+          <div class="row">
+            <button id="exportBtn">Export JSON</button>
+            <button id="importBtn">Import JSON</button>
+            <button id="pdfBtn">Download Summary</button>
+          </div>
+          <input type="file" id="importFile" accept=".json" hidden />
+          <button id="logoutProfileBtn" class="danger">Logout</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
